@@ -1,48 +1,66 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { useState } from 'react'
+import { List, Typography, Row, Col } from 'antd';
+import 'antd/dist/antd.css';
 
 export default function Home() {
+
+  const [histories, setHistories] = useState([
+    'Racing car sprays burning fuel into crowd.',
+    'Japanese princess to wed commoner.',
+    'Australian walks 100km after outback crash.',
+    'Man charged over missing wedding girl.',
+    'Los Angeles battles huge wildfires.',
+  ]);
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Calculation</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <h1 className={styles.title} style={{marginTop: 50, marginBottom: 50}}>
+        Welcome to WebCalc
+      </h1>
+      <p>This is the calculator which can have memory shortcut key command. It will help you to calculate by using histories.</p>
+      <p><code className={styles.code}>#1</code> shortcut key command will enter the latest answer you calculated.</p>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+      <section>
+        <Row className={styles.display}>
+          <Col>
+            <div className={styles.calculation}>
+              <h2>1521 x 35 = </h2>
+            </div>
+            <div className={styles.result}>
+              <h3>13256710438671</h3>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col flex="auto" className={styles.history}>
+            <List
+              header={<div>Calculator History</div>}
+              bordered
+              dataSource={histories}
+              renderItem={item => (
+                <List.Item>
+                  {item} <Typography.Text mark>[#1]</Typography.Text>
+                </List.Item>
+              )}
+            />
+          </Col>
+          <Col flex="300px" className={styles.buttons} style={{borderWidth: 1}}>
+            <div className={styles.calcarea} style={{paddingLeft:30, paddingRight:30}}>
+              Calculator Display Area
+              <div className={styles.numbers}></div>
+              <div className={styles.buttons}></div>
+            </div>
+          </Col>
+        </Row>
+      </section>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
   )
 }
