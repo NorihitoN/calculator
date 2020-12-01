@@ -4,7 +4,7 @@ import styled, { css } from "styled-components"
 
 interface KeyProps {
   color?: "red" | "green" | "dark";
-  isLarge?: boolean;
+  islarge?: boolean;
   onClick?: () => void;
 }
 
@@ -59,8 +59,8 @@ const KeyButton = styled(Button)<KeyProps>`
   padding-bottom: 1em;
   transition: background-color 0.15s ease-in-out, opacity 0.15s ease-in-out;
   ${({ color }) => colorToCss(color)}
-  ${({ isLarge }) =>
-    isLarge &&
+  ${({ islarge }) =>
+    islarge &&
     css`
       grid-column-end: span 2;
     `}
@@ -96,11 +96,11 @@ const KeyButton = styled(Button)<KeyProps>`
 export const Key: FunctionComponent<KeyProps> = ({
   children,
   color,
-  isLarge,
+  islarge,
   onClick,
 }) => {
   return (
-    <KeyButton color={color} isLarge={isLarge} onClick={onClick}>
+    <KeyButton color={color} islarge={islarge} onClick={onClick}>
       {children}
     </KeyButton>
   );
