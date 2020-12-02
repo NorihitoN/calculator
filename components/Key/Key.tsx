@@ -12,30 +12,30 @@ const colorToCss = (color: KeyProps['color']) => {
   switch (color) {
     case 'red':
       return css`
-        background-color: #c04444;
+        /* background-color: #c04444;
         color: #fff;
         &:hover,
         &:focus {
           background-color: #af3b3b;
-        }
+        } */
       `
     case 'green':
       return css`
-        background-color: #018645;
+        /* background-color: #018645;
         color: #fff;
         &:hover,
         &:focus {
           background-color: #016d38;
-        }
+        } */
       `
     case 'dark':
       return css`
-        background-color: #272727;
+        /* background-color: #272727;
         color: #c5830d;
         &:hover,
         &:focus {
           background-color: #1a1a1a;
-        }
+        } */
       `
   }
 
@@ -57,7 +57,7 @@ const KeyButton = styled(Button)<KeyProps>`
   height: 60px;
   padding-top: 1em;
   padding-bottom: 1em;
-  transition: background-color 0.15s ease-in-out, opacity 0.15s ease-in-out;
+  /* transition: background-color 0.15s ease-in-out, opacity 0.15s ease-in-out; */
   ${({ color }) => colorToCss(color)}
   ${({ islarge }) =>
     islarge &&

@@ -7,27 +7,38 @@ const StyledPad = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: 1fr;
-  margin: 0 30px;
+  padding: 1.5rem 1rem;
 `;
 
-interface PadProps{
-  onDigitKeyClick: (digit: Digit) => void
-  onOperatorKeyClick: (operator: Operator) => void
+interface PadProps {
+  onDigitKeyClick: (digit: Digit) => void;
+  onOperatorKeyClick: (operator: Operator) => void;
+  onEnterKeyClick: () => void;
+  onClearKeyClick: () => void;
 }
 
-export const Pad: FunctionComponent<PadProps> = ({ onDigitKeyClick, onOperatorKeyClick }) => {
+export const Pad: FunctionComponent<PadProps> = ({
+  onDigitKeyClick,
+  onOperatorKeyClick,
+  onEnterKeyClick,
+  onClearKeyClick,
+}) => {
   const handleKeyDown = ({ keyCode, shiftKey }: KeyboardEvent) => {
     console.log(keyCode, shiftKey);
     if (keyCode >= 48 && keyCode <= 57 && !shiftKey) {
       onDigitKeyClick((keyCode - 48) as Digit);
     } else if (keyCode === 107 || (keyCode === 187 && shiftKey)) {
-      onOperatorKeyClick('+' as Operator);
-    } else if (keyCode === 109 || (keyCode === 189)) {
-      onOperatorKeyClick('-' as Operator);
+      onOperatorKeyClick("+" as Operator);
+    } else if (keyCode === 109 || (keyCode === 189 && !shiftKey)) {
+      onOperatorKeyClick("-" as Operator);
     } else if (keyCode === 106 || (keyCode === 186 && shiftKey)) {
-      onOperatorKeyClick('×' as Operator);
-    } else if (keyCode === 111 || (keyCode === 191)) {
-      onOperatorKeyClick('÷' as Operator);
+      onOperatorKeyClick("×" as Operator);
+    } else if (keyCode === 111 || (keyCode === 191 && !shiftKey)) {
+      onOperatorKeyClick("÷" as Operator);
+    } else if (keyCode === 13 || (keyCode === 189 && shiftKey)) {
+      onEnterKeyClick();
+    } else if (keyCode === 46) {
+      onClearKeyClick();
     }
   };
 
@@ -40,25 +51,37 @@ export const Pad: FunctionComponent<PadProps> = ({ onDigitKeyClick, onOperatorKe
 
   return (
     <StyledPad>
-      <Key color="red"> AC </Key>
+      <Key > AC </Key>
       <Key> C </Key>
       <Key> -/+ </Key>
-      <Key onClick={() => onOperatorKeyClick('÷')} color="dark"> ÷ </Key>
+      <Key onClick={() => onOperatorKeyClick("÷")} >
+        {" "}
+        ÷{" "}
+      </Key>
       <Key onClick={() => onDigitKeyClick(7)}>7</Key>
       <Key onClick={() => onDigitKeyClick(8)}>8</Key>
       <Key onClick={() => onDigitKeyClick(9)}>9</Key>
-      <Key onClick={() => onOperatorKeyClick('×')} color="dark"> x </Key>
+      <Key onClick={() => onOperatorKeyClick("×")}>
+        {" "}
+        x{" "}
+      </Key>
       <Key onClick={() => onDigitKeyClick(4)}>4</Key>
       <Key onClick={() => onDigitKeyClick(5)}>5</Key>
       <Key onClick={() => onDigitKeyClick(6)}>6</Key>
-      <Key onClick={() => onOperatorKeyClick('-')} color="dark"> - </Key>
+      <Key onClick={() => onOperatorKeyClick("-")}>
+        {" "}
+        -{" "}
+      </Key>
       <Key onClick={() => onDigitKeyClick(1)}>1</Key>
       <Key onClick={() => onDigitKeyClick(2)}>2</Key>
       <Key onClick={() => onDigitKeyClick(3)}>3</Key>
-      <Key onClick={() => onOperatorKeyClick('+')} color="dark"> + </Key>
+      <Key onClick={() => onOperatorKeyClick("+")}>
+        {" "}
+        +{" "}
+      </Key>
       <Key onClick={() => onDigitKeyClick(0)}>0</Key>
       <Key>.</Key>
-      <Key color="green" islarge={"true"}>
+      <Key islarge={"true"}>
         =
       </Key>
     </StyledPad>

@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 const Container = styled.div`
   max-height: 100vh;
-  padding: 0 10rem;
+  padding: 0 5rem;
 `
 export const Framework: FunctionComponent = ({ children }) => {
   return (

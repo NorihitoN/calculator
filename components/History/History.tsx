@@ -9,6 +9,9 @@ interface HistoryProps {
 const StyledHistory = styled.div`
   padding: 1.5rem 1rem;
 `
+const StyledSpan = styled.span`
+  float: right;
+`
 
 export const History: FunctionComponent<HistoryProps> = ({ histories }) => {
   return (
@@ -17,9 +20,9 @@ export const History: FunctionComponent<HistoryProps> = ({ histories }) => {
         header={<div>Calculator History</div>}
         bordered
         dataSource={histories}
-        renderItem={(item) => (
+        renderItem={(item, index) => (
           <List.Item>
-            {item} <Typography.Text mark>[#1]</Typography.Text>
+            {item} <StyledSpan><Typography.Text mark>[#{index}]</Typography.Text></StyledSpan>
           </List.Item>
         )}
       />
