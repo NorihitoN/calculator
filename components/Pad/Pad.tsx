@@ -81,7 +81,7 @@ export const Pad: FunctionComponent<PadProps> = ({
       </Key>
       <Key onClick={() => onDigitKeyClick(0)}>0</Key>
       <Key>.</Key>
-      <Key islarge={"true"}>
+      <Key islarge={true}>
         =
       </Key>
     </StyledPad>
