@@ -15,6 +15,7 @@ interface PadProps {
   onOperatorKeyClick: (operator: Operator) => void;
   onEnterKeyClick: () => void;
   onClearKeyClick: () => void;
+  onClearAllKeyClick: () => void;
 }
 
 export const Pad: FunctionComponent<PadProps> = ({
@@ -22,6 +23,7 @@ export const Pad: FunctionComponent<PadProps> = ({
   onOperatorKeyClick,
   onEnterKeyClick,
   onClearKeyClick,
+  onClearAllKeyClick,
 }) => {
   const handleKeyDown = ({ keyCode, shiftKey }: KeyboardEvent) => {
     console.log(keyCode, shiftKey);
@@ -39,6 +41,8 @@ export const Pad: FunctionComponent<PadProps> = ({
       onEnterKeyClick();
     } else if (keyCode === 46) {
       onClearKeyClick();
+    } else if (keyCode === 27) {
+      onClearAllKeyClick();
     }
   };
 
@@ -51,8 +55,8 @@ export const Pad: FunctionComponent<PadProps> = ({
 
   return (
     <StyledPad>
-      <Key > AC </Key>
-      <Key> C </Key>
+      <Key onClick={() => onClearAllKeyClick()}> AC </Key>
+      <Key onClick={() => onClearKeyClick()}> C </Key>
       <Key> -/+ </Key>
       <Key onClick={() => onOperatorKeyClick("÷")} >
         {" "}
@@ -81,7 +85,7 @@ export const Pad: FunctionComponent<PadProps> = ({
       </Key>
       <Key onClick={() => onDigitKeyClick(0)}>0</Key>
       <Key>.</Key>
-      <Key islarge={true}>
+      <Key islarge="true" onClick={() => onEnterKeyClick()}>
         =
       </Key>
     </StyledPad>

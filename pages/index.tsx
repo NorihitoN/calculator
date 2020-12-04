@@ -35,12 +35,19 @@ const Home = () => {
   const onDigitKeyClick = (digit: Digit) => {
     let newDisplay = display;
 
+    // displayが0のときに0をクリックしても何もしない
     if ((display === "0" && digit === 0) || display.length > 11) {
       return;
     }
+    // dispalyが0のときに2を押すと2と表示させる。"02"とはならない。
+    // OperatorKeyもしくはEnterKeyにて計算されたあと（calculated = trueとなる)に
+    // 数値がクリックされると表示はリセットされる。 例）計算結果に14が表示されている状態で、
+    // さらに数値45がクリックされると、"45"となる。"1445"とはならない。
     if (display === "0" || calculated === true) {
+      // displayに表示する文字列を初期化
       newDisplay = digit.toString();
     } else {
+      // displayの表示されている文字列の末尾に追加
       newDisplay += digit.toString();
     }
     setDisplay(newDisplay);
@@ -113,11 +120,19 @@ const Home = () => {
     if(currentOperator === undefined) {
       setCalculated(false);
       setExpression("");
-      setDisplay("");
+      setDisplay(0);
       setAnswer(0);
     } else {
       setDisplay("");
     }
+  }
+
+  const onClearAllKeyClick = () => {
+    console.log("Clear all");
+    setCalculated(false);
+    setExpression("");
+    setDisplay(0);
+    setAnswer(0);
   }
 
   return (
@@ -152,6 +167,7 @@ const Home = () => {
               onOperatorKeyClick={onOperatorKeyClick}
               onEnterKeyClick={onEnterKeyClick}
               onClearKeyClick={onClearKeyClick}
+              onClearAllKeyClick={onClearAllKeyClick}
             />
           </Col>
           <Col xs={{span:0}} lg={{span: 0, offset:2}}></Col>
