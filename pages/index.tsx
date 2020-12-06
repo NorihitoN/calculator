@@ -33,6 +33,7 @@ const Home = () => {
   const [expression, setExpression] = useState<string>("");
 
   const onDigitKeyClick = (digit: Digit) => {
+    console.log(answer, currentOperator, display, calculated);
     let newDisplay = display;
 
     // displayが0のときに0をクリックしても何もしない
@@ -52,16 +53,21 @@ const Home = () => {
     }
     setDisplay(newDisplay);
     setCalculated(false);
-    console.log(answer, currentOperator);
   };
 
   const onOperatorKeyClick = (operator: Operator) => {
-    console.log(operator);
+    console.log(answer, currentOperator, display, calculated);
 
     // Operatorを連続で押した場合は無効
     if (calculated === true) {
       setCurrentOperator(operator);
-      setExpression(expression.slice(0, -1) + operator);
+      if(currentOperator != undefined){
+        // 前回処理がOperatorの場合
+        setExpression(expression.slice(0, -1) + operator);
+      } else {
+        // 前回処理がEnterの場合
+        setExpression(expression + operator);
+      }
       return;
     }
 
@@ -84,10 +90,10 @@ const Home = () => {
   };
 
   const onEnterKeyClick = () => {
-    console.log("Enter");
+    console.log(answer, currentOperator, display, calculated);
     if(currentOperator === undefined) return; 
 
-    // Operatorを連続で押した場合は無効
+    // Enterを連続で押した場合は無効
     if (calculated === true) {
       setCurrentOperator(undefined);
       setHistories([expression.slice(0,-1) + " = " + answer.toString(), ...histories]);
@@ -108,19 +114,19 @@ const Home = () => {
     }
     setCalculated(true);
     setHistories([expression + " " + display + " = " + newAnswer.toString(), ...histories]);
-    setExpression("");
+    setExpression(newAnswer.toString());
     setDisplay(newAnswer.toString());
-    setAnswer(0);
+    setAnswer(newAnswer);
     setCurrentOperator(undefined);
 
   };
 
   const onClearKeyClick = () => {
-    console.log("Delete");
+    console.log(answer, currentOperator, display, calculated);
     if(currentOperator === undefined) {
       setCalculated(false);
       setExpression("");
-      setDisplay(0);
+      setDisplay("0");
       setAnswer(0);
     } else {
       setDisplay("");
@@ -131,8 +137,9 @@ const Home = () => {
     console.log("Clear all");
     setCalculated(false);
     setExpression("");
-    setDisplay(0);
+    setDisplay("0");
     setAnswer(0);
+    setCurrentOperator(undefined);
   }
 
   return (
