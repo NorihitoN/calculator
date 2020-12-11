@@ -33,7 +33,6 @@ const Home = () => {
   const [expression, setExpression] = useState<string>("");
 
   const onDigitKeyClick = (digit: Digit) => {
-    console.log(answer, currentOperator, display, calculated);
 
     // 追加
     // Enterにて計算したあと、数字を入力すると
@@ -66,10 +65,10 @@ const Home = () => {
     }
     setDisplay(newDisplay);
     setCalculated(false);
+    console.log(answer, currentOperator, display, calculated);
   };
 
   const onOperatorKeyClick = (operator: Operator) => {
-    console.log(answer, currentOperator, display, calculated);
 
     // Operatorを連続で押した場合は無効
     if (calculated === true) {
@@ -96,13 +95,19 @@ const Home = () => {
     }
     setCalculated(true);
     setAnswer(newAnswer);
-    setExpression(expression + " " + display + " " + operator )
+    // delete keyによりdisplayが空白のときにOperator keyを押すと、
+    // displayが0であったとみなす。
+    if(display !== "") {
+      setExpression(expression + " " + display + " " + operator )
+    } else {
+      setExpression(expression + " 0 " + operator )
+    }
     setDisplay(newAnswer.toString());
     setCurrentOperator(operator);
+    console.log(answer, currentOperator, display, calculated);
   };
 
   const onEnterKeyClick = () => {
-    console.log(answer, currentOperator, display, calculated );
     if(currentOperator === undefined) return; 
 
     // Enterを連続で押した場合は無効
@@ -125,12 +130,19 @@ const Home = () => {
       newAnswer /= Number(display);
     }
     setCalculated(true);
-    setHistories([expression + " " + display + " = " + newAnswer.toString(), ...histories]);
+    // delete keyによりdisplayが空白のときにEnter keyを押すと、
+    // displayが0であったとみなす。
+    if(display !== "") {
+      setHistories([expression + " " + display + " = " + newAnswer.toString(), ...histories]);
+    } else {
+      setHistories([expression + " 0 = " + newAnswer.toString(), ...histories]);
+    }
     setExpression(newAnswer.toString());
     setDisplay(newAnswer.toString());
     setAnswer(newAnswer);
     setCurrentOperator(undefined);
 
+    console.log(answer, currentOperator, display, calculated );
   };
 
   const onClearKeyClick = () => {
