@@ -33,12 +33,11 @@ const Home = () => {
   const [expression, setExpression] = useState<string>("");
 
   const onDigitKeyClick = (digit: Digit) => {
-
     // 追加
     // Enterにて計算したあと、数字を入力すると
     // answerとexpressionをリセットするため。
     // onClearKeyClickと共通化可能。
-    if(currentOperator === undefined) {
+    if (currentOperator === undefined) {
       setCalculated(false);
       setExpression("");
       setDisplay("0");
@@ -69,11 +68,10 @@ const Home = () => {
   };
 
   const onOperatorKeyClick = (operator: Operator) => {
-
     // Operatorを連続で押した場合は無効
     if (calculated === true) {
       setCurrentOperator(operator);
-      if(currentOperator != undefined){
+      if (currentOperator != undefined) {
         // 前回処理がOperatorの場合
         setExpression(expression.slice(0, -1) + operator);
       } else {
@@ -84,7 +82,7 @@ const Home = () => {
     }
 
     let newAnswer = answer;
-    if ( currentOperator === undefined || currentOperator === "+") {
+    if (currentOperator === undefined || currentOperator === "+") {
       newAnswer += Number(display);
     } else if (currentOperator === "-") {
       newAnswer -= Number(display);
@@ -97,10 +95,10 @@ const Home = () => {
     setAnswer(newAnswer);
     // delete keyによりdisplayが空白のときにOperator keyを押すと、
     // displayが0であったとみなす。
-    if(display !== "") {
-      setExpression(expression + " " + display + " " + operator )
+    if (display !== "") {
+      setExpression(expression + " " + display + " " + operator);
     } else {
-      setExpression(expression + " 0 " + operator )
+      setExpression(expression + " 0 " + operator);
     }
     setDisplay(newAnswer.toString());
     setCurrentOperator(operator);
@@ -108,16 +106,19 @@ const Home = () => {
   };
 
   const onEnterKeyClick = () => {
-    if(currentOperator === undefined) return; 
+    if (currentOperator === undefined) return;
 
     // Enterを連続で押した場合は無効
     if (calculated === true) {
       setCurrentOperator(undefined);
-      setHistories([expression.slice(0,-1) + " = " + answer.toString(), ...histories]);
+      setHistories([
+        expression.slice(0, -1) + " = " + answer.toString(),
+        ...histories,
+      ]);
       setExpression("");
       setAnswer(0);
       return;
-    } 
+    }
 
     let newAnswer = answer;
     if (currentOperator === undefined || currentOperator === "+") {
@@ -132,8 +133,11 @@ const Home = () => {
     setCalculated(true);
     // delete keyによりdisplayが空白のときにEnter keyを押すと、
     // displayが0であったとみなす。
-    if(display !== "") {
-      setHistories([expression + " " + display + " = " + newAnswer.toString(), ...histories]);
+    if (display !== "") {
+      setHistories([
+        expression + " " + display + " = " + newAnswer.toString(),
+        ...histories,
+      ]);
     } else {
       setHistories([expression + " 0 = " + newAnswer.toString(), ...histories]);
     }
@@ -142,12 +146,12 @@ const Home = () => {
     setAnswer(newAnswer);
     setCurrentOperator(undefined);
 
-    console.log(answer, currentOperator, display, calculated );
+    console.log(answer, currentOperator, display, calculated);
   };
 
   const onClearKeyClick = () => {
-    console.log(answer, currentOperator, display, calculated );
-    if(currentOperator === undefined) {
+    console.log(answer, currentOperator, display, calculated);
+    if (currentOperator === undefined) {
       setCalculated(false);
       setExpression("");
       setDisplay("0");
@@ -155,7 +159,7 @@ const Home = () => {
     } else {
       setDisplay("");
     }
-  }
+  };
 
   const onClearAllKeyClick = () => {
     console.log("Clear all");
@@ -164,35 +168,51 @@ const Home = () => {
     setDisplay("0");
     setAnswer(0);
     setCurrentOperator(undefined);
+  };
+
+  const onPointKeyClick = () => {
+    return 0;
+  };
+
+  const onSignKeyClick = () => {
+    return 0;
+  };
+
+  const onBackSpaceKeyClick = () => {
+    return 0;
+  }
+
+  const onPercentageKeyClick = () => {
+
   }
 
   return (
     <Framework>
       <Title>WebCalc</Title>
       <Row>
-        <Col xs={{span:24}} lg={{span: 20, offset:2}}>
+        <Col xs={{ span: 24 }} lg={{ span: 20, offset: 2 }}>
           <p>
-            This is the calculator which can have memory shortcut key command. It
-            will help you to calculate by using histories.
+            This is the calculator which can have memory shortcut key command.
+            It will help you to calculate by using histories.
           </p>
           <p>
-            <StyledCode>#1</StyledCode> shortcut key command will enter the latest
-            answer you calculated.
+            <StyledCode>#1</StyledCode> shortcut key command will enter the
+            latest answer you calculated.
           </p>
         </Col>
       </Row>
 
       <section>
         <Row>
-          <Col xs={{span:24}} lg={{span: 20, offset:2}}>
+          <Col xs={{ span: 24 }} lg={{ span: 20, offset: 2 }}>
             <Display value={display} expression={`${expression}`} />
           </Col>
         </Row>
         <Row>
-          <Col xs={{span:24}} lg={{span: 12, offset:2}}>
+          <Col xs={{ span: 24 }} lg={{ span: 12, offset: 2 }}>
             <History histories={histories} />
           </Col>
-          <Col xs={{span:24}} lg={{span: 8}}>
+          <Col xs={{ span: 24 }} lg={{ span: 8 }}>
             <Pad
               onDigitKeyClick={onDigitKeyClick}
               onOperatorKeyClick={onOperatorKeyClick}
@@ -201,7 +221,7 @@ const Home = () => {
               onClearAllKeyClick={onClearAllKeyClick}
             />
           </Col>
-          <Col xs={{span:0}} lg={{span: 0, offset:2}}></Col>
+          <Col xs={{ span: 0 }} lg={{ span: 0, offset: 2 }}></Col>
         </Row>
       </section>
     </Framework>
