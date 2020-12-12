@@ -96,7 +96,8 @@ const Home = () => {
     // delete keyによりdisplayが空白のときにOperator keyを押すと、
     // displayが0であったとみなす。
     if (display !== "") {
-      setExpression(expression + " " + display + " " + operator);
+      // setExpression(expression + " " + display + " " + operator);
+      setExpression(expression + " " + display.replace(/\.$/,"") + " " + operator);
     } else {
       setExpression(expression + " 0 " + operator);
     }
@@ -135,7 +136,7 @@ const Home = () => {
     // displayが0であったとみなす。
     if (display !== "") {
       setHistories([
-        expression + " " + display + " = " + newAnswer.toString(),
+        expression + " " + display.replace(/\.$/,"")  + " = " + newAnswer.toString(),
         ...histories,
       ]);
     } else {
