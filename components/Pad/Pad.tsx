@@ -18,6 +18,7 @@ interface PadProps {
   onClearAllKeyClick: () => void;
   onPointKeyClick: () => void;
   onBackSpaceKeyClick: () => void;
+  onSignKeyClick: () => void;
 }
 
 export const Pad: FunctionComponent<PadProps> = ({
@@ -28,6 +29,7 @@ export const Pad: FunctionComponent<PadProps> = ({
   onClearAllKeyClick,
   onPointKeyClick,
   onBackSpaceKeyClick,
+  onSignKeyClick,
 }) => {
   const handleKeyDown = ({ keyCode, shiftKey }: KeyboardEvent) => {
     console.log(keyCode, shiftKey);
@@ -51,6 +53,8 @@ export const Pad: FunctionComponent<PadProps> = ({
       onPointKeyClick();
     } else if (keyCode === 8) {
       onBackSpaceKeyClick();
+    } else if (keyCode === 83) {
+      onSignKeyClick();
     }
   };
 
@@ -79,7 +83,7 @@ export const Pad: FunctionComponent<PadProps> = ({
       <Key onClick={() => onDigitKeyClick(2)}>2</Key>
       <Key onClick={() => onDigitKeyClick(3)}>3</Key>
       <Key onClick={() => onOperatorKeyClick("+")}> + </Key>
-      <Key> -/+ </Key>
+      <Key onClick={() => onSignKeyClick()}> -/+ </Key>
       <Key onClick={() => onDigitKeyClick(0)}>0</Key>
       <Key onClick={() => onPointKeyClick()}>.</Key>
       <Key onClick={() => onEnterKeyClick()}>

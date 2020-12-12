@@ -196,7 +196,15 @@ const Home = () => {
     setCalculated(false);
   };
 
-  const onSignKeyClick = () => {};
+  const onSignKeyClick = () => {
+    if(!calculated && display !== "" && display !== "0") {
+      if(Number(display) > 0) {
+        setDisplay("-" + display);
+      } else {
+        setDisplay(display.replace(/^-/,""));
+      }
+    }
+  };
 
   const onBackSpaceKeyClick = () => {
     if(!calculated) {
@@ -242,6 +250,7 @@ const Home = () => {
               onClearAllKeyClick={onClearAllKeyClick}
               onPointKeyClick={onPointKeyClick}
               onBackSpaceKeyClick={onBackSpaceKeyClick}
+              onSignKeyClick={onSignKeyClick}
             />
           </Col>
           <Col xs={{ span: 0 }} lg={{ span: 0, offset: 2 }}></Col>
