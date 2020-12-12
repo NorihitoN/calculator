@@ -97,11 +97,13 @@ const Home = () => {
     // displayが0であったとみなす。
     if (display !== "") {
       // setExpression(expression + " " + display + " " + operator);
-      setExpression(expression + " " + display.replace(/\.$/,"") + " " + operator);
+      setExpression(
+        expression + " " + display.replace(/\.$/, "") + " " + operator
+      );
     } else {
       setExpression(expression + " 0 " + operator);
     }
-    setDisplay(newAnswer.toString().slice(0,15));
+    setDisplay(newAnswer.toString().slice(0, 15));
     setCurrentOperator(operator);
     console.log(answer, currentOperator, display, calculated);
   };
@@ -136,14 +138,18 @@ const Home = () => {
     // displayが0であったとみなす。
     if (display !== "") {
       setHistories([
-        expression + " " + display.replace(/\.$/,"")  + " = " + newAnswer.toString(),
+        expression +
+          " " +
+          display.replace(/\.$/, "") +
+          " = " +
+          newAnswer.toString(),
         ...histories,
       ]);
     } else {
       setHistories([expression + " 0 = " + newAnswer.toString(), ...histories]);
     }
-    setDisplay(newAnswer.toString().slice(0,15));
-    setExpression(newAnswer.toString().slice(0,15));
+    setDisplay(newAnswer.toString().slice(0, 15));
+    setExpression(newAnswer.toString().slice(0, 15));
     setAnswer(newAnswer);
     setCurrentOperator(undefined);
 
@@ -172,7 +178,6 @@ const Home = () => {
   };
 
   const onPointKeyClick = () => {
-
     if (currentOperator === undefined) {
       setCalculated(false);
       setExpression("");
@@ -182,27 +187,25 @@ const Home = () => {
 
     let newDisplay = display;
 
-    if(calculated === true || display === "") {
-        newDisplay = "0.";
+    if (calculated === true || display === "") {
+      newDisplay = "0.";
     } else if (display.indexOf(".") === -1) {
-        newDisplay += ".";
-    } 
+      newDisplay += ".";
+    }
     setDisplay(newDisplay);
     setCalculated(false);
-    return 0;
   };
 
-  const onSignKeyClick = () => {
-    return 0;
-  };
+  const onSignKeyClick = () => {};
 
   const onBackSpaceKeyClick = () => {
-    return 0;
-  }
+    if(!calculated) {
+      let newDisplay = display.slice(0,-1);
+      setDisplay(newDisplay);
+    }
+  };
 
-  const onPercentageKeyClick = () => {
-
-  }
+  const onPercentageKeyClick = () => {};
 
   return (
     <Framework>
@@ -238,6 +241,7 @@ const Home = () => {
               onClearKeyClick={onClearKeyClick}
               onClearAllKeyClick={onClearAllKeyClick}
               onPointKeyClick={onPointKeyClick}
+              onBackSpaceKeyClick={onBackSpaceKeyClick}
             />
           </Col>
           <Col xs={{ span: 0 }} lg={{ span: 0, offset: 2 }}></Col>

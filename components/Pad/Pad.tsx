@@ -17,6 +17,7 @@ interface PadProps {
   onClearKeyClick: () => void;
   onClearAllKeyClick: () => void;
   onPointKeyClick: () => void;
+  onBackSpaceKeyClick: () => void;
 }
 
 export const Pad: FunctionComponent<PadProps> = ({
@@ -26,6 +27,7 @@ export const Pad: FunctionComponent<PadProps> = ({
   onClearKeyClick,
   onClearAllKeyClick,
   onPointKeyClick,
+  onBackSpaceKeyClick,
 }) => {
   const handleKeyDown = ({ keyCode, shiftKey }: KeyboardEvent) => {
     console.log(keyCode, shiftKey);
@@ -47,6 +49,8 @@ export const Pad: FunctionComponent<PadProps> = ({
       onClearAllKeyClick();
     } else if (keyCode === 110 || keyCode === 190) {
       onPointKeyClick();
+    } else if (keyCode === 8) {
+      onBackSpaceKeyClick();
     }
   };
 
@@ -61,35 +65,24 @@ export const Pad: FunctionComponent<PadProps> = ({
     <StyledPad>
       <Key onClick={() => onClearAllKeyClick()}> AC </Key>
       <Key onClick={() => onClearKeyClick()}> C </Key>
-      <Key> -/+ </Key>
-      <Key onClick={() => onOperatorKeyClick("÷")} >
-        {" "}
-        ÷{" "}
-      </Key>
+      <Key onClick={() => onBackSpaceKeyClick()}> DEL </Key>
+      <Key onClick={() => onOperatorKeyClick("÷")}> ÷ </Key>
       <Key onClick={() => onDigitKeyClick(7)}>7</Key>
       <Key onClick={() => onDigitKeyClick(8)}>8</Key>
       <Key onClick={() => onDigitKeyClick(9)}>9</Key>
-      <Key onClick={() => onOperatorKeyClick("×")}>
-        {" "}
-        x{" "}
-      </Key>
+      <Key onClick={() => onOperatorKeyClick("×")}> x </Key>
       <Key onClick={() => onDigitKeyClick(4)}>4</Key>
       <Key onClick={() => onDigitKeyClick(5)}>5</Key>
       <Key onClick={() => onDigitKeyClick(6)}>6</Key>
-      <Key onClick={() => onOperatorKeyClick("-")}>
-        {" "}
-        -{" "}
-      </Key>
+      <Key onClick={() => onOperatorKeyClick("-")}> - </Key>
       <Key onClick={() => onDigitKeyClick(1)}>1</Key>
       <Key onClick={() => onDigitKeyClick(2)}>2</Key>
       <Key onClick={() => onDigitKeyClick(3)}>3</Key>
-      <Key onClick={() => onOperatorKeyClick("+")}>
-        {" "}
-        +{" "}
-      </Key>
+      <Key onClick={() => onOperatorKeyClick("+")}> + </Key>
+      <Key> -/+ </Key>
       <Key onClick={() => onDigitKeyClick(0)}>0</Key>
       <Key onClick={() => onPointKeyClick()}>.</Key>
-      <Key islarge={true} onClick={() => onEnterKeyClick()}>
+      <Key onClick={() => onEnterKeyClick()}>
         =
       </Key>
     </StyledPad>
