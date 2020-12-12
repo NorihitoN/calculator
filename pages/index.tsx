@@ -47,7 +47,7 @@ const Home = () => {
     let newDisplay = display;
 
     // displayが0のときに0をクリックしても何もしない
-    if ((display === "0" && digit === 0) || display.length > 11) {
+    if ((display === "0" && digit === 0) || display.length > 15) {
       return;
     }
 
@@ -100,7 +100,7 @@ const Home = () => {
     } else {
       setExpression(expression + " 0 " + operator);
     }
-    setDisplay(newAnswer.toString());
+    setDisplay(newAnswer.toString().slice(0,15));
     setCurrentOperator(operator);
     console.log(answer, currentOperator, display, calculated);
   };
@@ -141,8 +141,8 @@ const Home = () => {
     } else {
       setHistories([expression + " 0 = " + newAnswer.toString(), ...histories]);
     }
-    setExpression(newAnswer.toString());
-    setDisplay(newAnswer.toString());
+    setDisplay(newAnswer.toString().slice(0,15));
+    setExpression(newAnswer.toString().slice(0,15));
     setAnswer(newAnswer);
     setCurrentOperator(undefined);
 
@@ -171,6 +171,23 @@ const Home = () => {
   };
 
   const onPointKeyClick = () => {
+
+    if (currentOperator === undefined) {
+      setCalculated(false);
+      setExpression("");
+      setDisplay("0");
+      setAnswer(0);
+    }
+
+    let newDisplay = display;
+
+    if(calculated === true || display === "") {
+        newDisplay = "0.";
+    } else if (display.indexOf(".") === -1) {
+        newDisplay += ".";
+    } 
+    setDisplay(newDisplay);
+    setCalculated(false);
     return 0;
   };
 
@@ -219,6 +236,7 @@ const Home = () => {
               onEnterKeyClick={onEnterKeyClick}
               onClearKeyClick={onClearKeyClick}
               onClearAllKeyClick={onClearAllKeyClick}
+              onPointKeyClick={onPointKeyClick}
             />
           </Col>
           <Col xs={{ span: 0 }} lg={{ span: 0, offset: 2 }}></Col>
