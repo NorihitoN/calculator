@@ -216,12 +216,32 @@ const Home = () => {
   };
 
   const onSquareKeyClick = () => {
-    if(!calculated && display !== "" && display !=="0") {
+    if(!calculated && display !== "") {
       let newDisplay = (Number(display)**2).toString().slice(0, 15);
       setDisplay(newDisplay);
     }
 
+    // 2回操作した場合にもとの値に戻らないケースがある。
     // calculated === true つまり 計算結果に対しても2乗できるようにする。
+  }
+
+  const onSqrtKeyClick = () => {
+    if(!calculated && display !== "") {
+      let newDisplay = (Math.sqrt(Number(display))).toString().slice(0,15);
+      setDisplay(newDisplay);
+    }
+
+    // 2回操作した場合にもとの値に戻らないケースがある。
+    // calculated === true つまり 計算結果に対してもRootできるようにする。
+  }
+
+  const onInverseKeyClick = () => {
+    if(!calculated && display !== "" && display !== "0") {
+      let newDisplay = (1/(Number(display))).toString().slice(0,15);
+      setDisplay(newDisplay);
+    }
+    // 2回操作した場合にもとの値に戻らないケースがある。
+    // calculated === true つまり 計算結果に対してもInverseできるようにする。
   }
 
   const onPercentageKeyClick = () => {};
@@ -263,6 +283,8 @@ const Home = () => {
               onBackSpaceKeyClick={onBackSpaceKeyClick}
               onSignKeyClick={onSignKeyClick}
               onSquareKeyClick={onSquareKeyClick}
+              onSqrtKeyClick={onSqrtKeyClick}
+              onInverseKeyClick={onInverseKeyClick}
             />
           </Col>
           <Col xs={{ span: 0 }} lg={{ span: 0, offset: 2 }}></Col>

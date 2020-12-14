@@ -20,6 +20,8 @@ interface PadProps {
   onBackSpaceKeyClick: () => void;
   onSignKeyClick: () => void;
   onSquareKeyClick: () => void;
+  onSqrtKeyClick: () => void;
+  onInverseKeyClick: () => void;
 }
 
 export const Pad: FunctionComponent<PadProps> = ({
@@ -32,6 +34,8 @@ export const Pad: FunctionComponent<PadProps> = ({
   onBackSpaceKeyClick,
   onSignKeyClick,
   onSquareKeyClick,
+  onSqrtKeyClick,
+  onInverseKeyClick,
 }) => {
   const handleKeyDown = ({ keyCode, shiftKey }: KeyboardEvent) => {
     console.log(keyCode, shiftKey);
@@ -59,6 +63,10 @@ export const Pad: FunctionComponent<PadProps> = ({
       onSignKeyClick();
     } else if (keyCode === 81) {
       onSquareKeyClick();
+    } else if (keyCode === 82) {
+      onSqrtKeyClick();
+    } else if (keyCode === 73) {
+      onInverseKeyClick();
     }
   };
 
