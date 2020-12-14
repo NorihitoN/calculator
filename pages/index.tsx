@@ -204,6 +204,8 @@ const Home = () => {
         setDisplay(display.replace(/^-/,""));
       }
     }
+
+    // calculated === true つまり 計算結果に対しても+/-できるようにする。
   };
 
   const onBackSpaceKeyClick = () => {
@@ -212,6 +214,15 @@ const Home = () => {
       setDisplay(newDisplay);
     }
   };
+
+  const onSquareKeyClick = () => {
+    if(!calculated && display !== "" && display !=="0") {
+      let newDisplay = (Number(display)**2).toString().slice(0, 15);
+      setDisplay(newDisplay);
+    }
+
+    // calculated === true つまり 計算結果に対しても2乗できるようにする。
+  }
 
   const onPercentageKeyClick = () => {};
 
@@ -251,6 +262,7 @@ const Home = () => {
               onPointKeyClick={onPointKeyClick}
               onBackSpaceKeyClick={onBackSpaceKeyClick}
               onSignKeyClick={onSignKeyClick}
+              onSquareKeyClick={onSquareKeyClick}
             />
           </Col>
           <Col xs={{ span: 0 }} lg={{ span: 0, offset: 2 }}></Col>
