@@ -197,11 +197,11 @@ const Home = () => {
   };
 
   const onSignKeyClick = () => {
-    if(!calculated && display !== "" && display !== "0") {
-      if(Number(display) > 0) {
+    if (!calculated && display !== "" && display !== "0") {
+      if (Number(display) > 0) {
         setDisplay("-" + display);
       } else {
-        setDisplay(display.replace(/^-/,""));
+        setDisplay(display.replace(/^-/, ""));
       }
     }
 
@@ -209,42 +209,50 @@ const Home = () => {
   };
 
   const onBackSpaceKeyClick = () => {
-    if(!calculated) {
-      let newDisplay = display.slice(0,-1);
+    if (!calculated) {
+      let newDisplay = display.slice(0, -1);
       setDisplay(newDisplay);
     }
   };
 
   const onSquareKeyClick = () => {
-    if(!calculated && display !== "") {
-      let newDisplay = (Number(display)**2).toString().slice(0, 15);
+    if (!calculated && display !== "") {
+      let newDisplay = (Number(display) ** 2).toString().slice(0, 15);
       setDisplay(newDisplay);
     }
 
     // 2回操作した場合にもとの値に戻らないケースがある。
     // calculated === true つまり 計算結果に対しても2乗できるようにする。
-  }
+  };
 
   const onSqrtKeyClick = () => {
-    if(!calculated && display !== "") {
-      let newDisplay = (Math.sqrt(Number(display))).toString().slice(0,15);
+    if (!calculated && display !== "") {
+      let newDisplay = Math.sqrt(Number(display)).toString().slice(0, 15);
       setDisplay(newDisplay);
     }
 
     // 2回操作した場合にもとの値に戻らないケースがある。
     // calculated === true つまり 計算結果に対してもRootできるようにする。
-  }
+  };
 
   const onInverseKeyClick = () => {
-    if(!calculated && display !== "" && display !== "0") {
-      let newDisplay = (1/(Number(display))).toString().slice(0,15);
+    if (!calculated && display !== "" && display !== "0") {
+      let newDisplay = (1 / Number(display)).toString().slice(0, 15);
       setDisplay(newDisplay);
     }
     // 2回操作した場合にもとの値に戻らないケースがある。
     // calculated === true つまり 計算結果に対してもInverseできるようにする。
-  }
+  };
 
   const onPercentageKeyClick = () => {};
+
+  const onHistoryKeyClick = (digit: Digit) => {
+    if(digit < histories.length) {
+      onClearKeyClick(); // ２回連続でshift+#を操作してもクリアされない
+      let historyAns = histories[digit].split(" = ")[1];
+      onDigitKeyClick(Number(historyAns) as Digit);
+    }
+  };
 
   return (
     <Framework>
@@ -285,6 +293,7 @@ const Home = () => {
               onSquareKeyClick={onSquareKeyClick}
               onSqrtKeyClick={onSqrtKeyClick}
               onInverseKeyClick={onInverseKeyClick}
+              onHistoryKeyClick={onHistoryKeyClick}
             />
           </Col>
           <Col xs={{ span: 0 }} lg={{ span: 0, offset: 2 }}></Col>
