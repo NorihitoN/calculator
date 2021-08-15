@@ -22,7 +22,7 @@ export const History: FunctionComponent<HistoryProps> = ({ histories }) => {
         dataSource={histories}
         renderItem={(item, index) => (
           <List.Item>
-            {item} <StyledSpan><Typography.Text mark>[#{index}]</Typography.Text></StyledSpan>
+            {item} <StyledSpan><Typography.Text mark>[shift+{index}]</Typography.Text></StyledSpan>
           </List.Item>
         )}
       />

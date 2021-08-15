@@ -22,6 +22,7 @@ interface PadProps {
   onSquareKeyClick: () => void;
   onSqrtKeyClick: () => void;
   onInverseKeyClick: () => void;
+  onHistoryKeyClick: (digit: Digit) => void;
 }
 
 export const Pad: FunctionComponent<PadProps> = ({
@@ -36,11 +37,14 @@ export const Pad: FunctionComponent<PadProps> = ({
   onSquareKeyClick,
   onSqrtKeyClick,
   onInverseKeyClick,
+  onHistoryKeyClick,
 }) => {
   const handleKeyDown = ({ keyCode, shiftKey }: KeyboardEvent) => {
     console.log(keyCode, shiftKey);
     if (keyCode >= 48 && keyCode <= 57 && !shiftKey) {
       onDigitKeyClick((keyCode - 48) as Digit);
+    } else if (keyCode >= 48 && keyCode <= 57 && shiftKey) {
+      onHistoryKeyClick((keyCode - 48) as Digit);
     } else if (keyCode === 107 || (keyCode === 187 && shiftKey)) {
       onOperatorKeyClick("+" as Operator);
     } else if (keyCode === 109 || (keyCode === 189 && !shiftKey)) {
